@@ -4,15 +4,18 @@ include_once "../includes/connection.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<title>Signup</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../style/bootstrap.min.css">
-		<link rel="stylesheet" href="../style/style.css">
-	</head>
-	<body>
-		
-		<?php
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+
+        <?php
 			if(isset($_GET['message'])){
 				$msg = $_GET['message'];
 				echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -23,8 +26,8 @@ include_once "../includes/connection.php";
 				</div>';
 			}
 		?>
-		
-		<div style="width:500px;margin:auto auto;  margin-top:250px;">
+
+<div style="width:500px;margin:auto auto;  margin-top:250px;">
 		<form method="post" class="form-signin">
       <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
       
@@ -38,8 +41,8 @@ include_once "../includes/connection.php";
      
     </form>
 		</div>
-		
-		<?php 
+
+        <?php 
 			if(isset($_POST['signup'])){
 				
 				$author_name = mysqli_real_escape_string($conn, $_POST['author_name']);
@@ -81,10 +84,6 @@ include_once "../includes/connection.php";
 				}
 			}
 		?>
-	
-	
-	<script src="../js/jquery.js"></script>
-	<script src="../js/bootstrap.min.js"></script>
-	<script src="../js/scroll.js"></script>
-	</body>
+
+</body>
 </html>
