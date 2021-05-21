@@ -1,6 +1,7 @@
 <?php
 include_once "../includes/functions.php";
 include_once "../includes/connection.php";
+include_once "../includes/exceptions.php";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -68,6 +69,29 @@ include_once "../includes/connection.php";
 						header("Location: signup.php?message=Email+Already+Exists");
 						exit();
 					} else {
+						
+						try { 
+							// Test if password has letters and digits only, and has at least 8 chars
+							validatePassword($author_password);
+	
+							} catch(PasswordLengthException $ex) {
+								$message = $ex -> getMessage();
+								header("Location: signup.php?message=Password+Length+Exception:+$message");
+								exit();
+							} catch(PasswordNoLetterException $ex) {
+								$message = $ex -> getMessage();
+								header("Location: signup.php?message=Password+No+Letter+Exception:+$message");
+								exit();
+							} catch(PasswordNoDigitException $ex) {
+								$message = $ex -> getMessage();
+								header("Location: signup.php?message=Password+No+Digit+Exception:+$message");
+								exit();
+							} catch(PasswordInvalidCharException $ex) {
+								$message = $ex -> getMessage();
+								header("Location: signup.php?message=Password+Invalid+Char+Exception:+$message");
+								exit();
+							}
+						
 						//hashing password
 						$hash = password_hash($author_password, PASSWORD_DEFAULT);
 						
