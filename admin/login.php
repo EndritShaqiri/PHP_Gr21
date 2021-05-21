@@ -52,6 +52,32 @@ include_once "../includes/connection.php";
 					exit();
 				}
 				
+				$data = "Admin";
+
+				//created template
+				$sql = "SELECT * FROM author WHERE author_email=?;";
+
+				//create a prepared statement
+				$stmt = mysqli_stmt_init($conn);
+				//prepare the prepared statement
+
+				if(!mysqli_stmt_prepare($stmt,$sql)){
+
+					echo "Sql statement failed";
+					
+				}else{
+					mysqli_stmt_bind_param($stmt, "s", $data);
+
+					mysqli_stmt_execute($stmt);
+
+					$result = mysqli_stmt_get_result($stmt);
+
+					while($row = mysqli_fetch_assoc($result)){
+						echo $row['author_email'] . "<br>";
+
+					}
+				}
+				
 				//checking for validity of email
 				if(!filter_var($author_email,FILTER_VALIDATE_EMAIL)){
 					header("Location: login.php?message=Please+Enter+A+Valid+email");
