@@ -52,6 +52,10 @@ include_once "../includes/connection.php";
 					exit();
 				}
 				
+				function valid_email($author_email) {
+					return (!preg_match("/^([a-z0-9\+\-]+)(\.[a-z0-9\+\-]+)*@([a-z0-9\-]+\.)+[a-z]{2,6}$/ix", $author_email)) ? FALSE : TRUE;
+				}
+				
 				//checking for validity of email
 				if(!filter_var($author_email,FILTER_VALIDATE_EMAIL)){
 					header("Location: signup.php?message=Please+Enter+A+Valid+email");
