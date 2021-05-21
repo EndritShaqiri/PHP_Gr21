@@ -112,6 +112,20 @@ if(isset($_SESSION['author_role'])){
       </div>
     </div>
 	
+	<?php
+
+if(!empty($_POST["remember"])) {
+	setcookie ("author_email",$_POST["author_email"],time()+ 3600);
+	setcookie ("author_password",$_POST["author_password"],time()+ 3600);
+	echo "Cookies Set Successfuly";
+} else {
+	setcookie("author_email","");
+	setcookie("author_password","");
+	echo "Cookies Not Set";
+}
+
+?>
+	
 	<script src="../js/jquery.js"></script>
 	<script src="../js/bootstrap.min.js"></script>
 	<script src="../js/scroll.js"></script>
