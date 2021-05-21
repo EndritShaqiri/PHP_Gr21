@@ -15,7 +15,7 @@ if(isset($_SESSION['author_role'])){
 	<body>
 	
 	 <nav class="navbar navbar-dark sticky-top bg-dark   shadow">
-      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+      <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">FIEK Blog</a>
       
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
