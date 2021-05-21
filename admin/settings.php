@@ -1,6 +1,7 @@
 <?php
 include_once "../includes/functions.php";
 include_once "../includes/connection.php";
+include_once "../includes/alerts.php";
 session_start();
 if(isset($_SESSION['author_role'])){
 	if($_SESSION['author_role']=="admin"){
@@ -39,12 +40,9 @@ if(isset($_SESSION['author_role'])){
 			<?php
 			if(isset($_GET['message'])){
 				$msg = $_GET['message'];
-				echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				'.$msg.'
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				</div>';
+    			$alert = new Alert;
+    			$alert->setAlert($msg);;
+    			$alert->invoke($msg);
 			}
 			?>
 			
@@ -67,7 +65,7 @@ if(isset($_SESSION['author_role'])){
 							
 							setSettingValue("home_jumbo_title",$jumboTitle);
 							setSettingValue("home_jumbo_desc",$jumboDesc);
-							header("Location: settings.php?message=Settings Updated");
+							header("Location: settings.php?message=SUCCESS: Settings Updated");
 						}
 					?>
 				
@@ -89,6 +87,6 @@ if(isset($_SESSION['author_role'])){
 	<?php
 }
 }else{
-	header("Location: login.php?message=Please+Login");
+	header("Location: login.php?message=WARNING: Please+Login");
 }
 ?>

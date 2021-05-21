@@ -49,4 +49,10 @@ function setSettingValue($setting,$value){
 	}
 }
 
+function startsWith ($string, $startString)
+{
+    $len = strlen($startString);
+    return (substr($string, 0, $len) === $startString);
+}
+
 ?>

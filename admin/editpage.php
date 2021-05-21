@@ -1,13 +1,14 @@
 <?php 
 include_once "../includes/connection.php";
 include_once "../includes/functions.php";
+include_once "../includes/alerts.php";
 session_start();
 if(!isset($_GET['id'])){
-	header("Location: page.php?message=Please+click+the+edit+button");
+	header("Location: page.php?message=INFO: Please+click+the+edit+button");
 	exit();
 }else{
 	if(!isset($_SESSION['author_role'])){
-		header("Location: login.php?message=Please+Login");
+		header("Location: login.php?message=INFO: Please+Login");
 		exit();
 	}else{
 		if($_SESSION['author_role']!="admin"){
@@ -18,7 +19,7 @@ if(!isset($_GET['id'])){
 			$result = mysqli_query($conn, $sql);
 			if(mysqli_num_rows($result)<=0){
 				//We dont have any page for this id
-				header("Location: page.php?message=No+page+found");
+				header("Location: page.php?message=ERROR: No+page+found");
 				exit();
 			}else{
 				?>
@@ -59,12 +60,9 @@ if(!isset($_GET['id'])){
 			<?php
 			if(isset($_GET['message'])){
 				$msg = $_GET['message'];
-				echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				'.$msg.'
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				</div>';
+    			$alert = new Alert;
+    			$alert->setAlert($msg);;
+    			$alert->invoke($msg);
 			}
 			?>
 			<?php
@@ -98,7 +96,7 @@ if(!isset($_GET['id'])){
 						
 						//checking if above fields are empty
 						if(empty($page_title) OR empty($page_content)){
-							echo '<script>window.location = "page.php?message=Empty+Fields";</script>';
+							echo '<script>window.location = "page.php?message=WARNING: Empty+Fields";</script>';
 							exit();
 						}
 						
@@ -106,7 +104,7 @@ if(!isset($_GET['id'])){
 							
 							$sql = "UPDATE page SET page_title='$page_title', page_content='$page_content' WHERE page_id='$page_id'";
 							if(mysqli_query($conn, $sql)){
-								echo '<script>window.location = "page.php?message=Page+Updated";</script>';
+								echo '<script>window.location = "page.php?message=SUCCESS:Page+Updated";</script>';
 							}else{
 								echo '<script>window.location = "page.php?message=Error";</script>';
 							}

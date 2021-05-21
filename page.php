@@ -1,6 +1,7 @@
 <?php
 include_once "includes/connection.php";
 include_once "includes/functions.php";
+include_once "includes/alerts.php";
 if(!isset($_GET['id'])){
 	header("Location: index.php?geterr");
 }else{
@@ -40,17 +41,17 @@ if(!isset($_GET['id'])){
                        //if user leaves an empty field
                        if(empty($recipient) || empty($subject) || empty($message)){
                            //display an alert message if one of the fields is empty -->
-                           header("Location: page.php?id=$id&message=All+inputs+are+required!");
+                           header("Location: page.php?id=$id&message=WARNING: All+inputs+are+required!");
                         }else{
                             // PHP function to send mail
                            if(mail($recipient, $subject, $message, $sender)){
                             
-                            header("Location: page.php?id=$id&message=Your+mail+was+successfully+sent!");
+                            header("Location: page.php?id=$id&message=SUCCESS: Your+mail+was+successfully+sent!");
 
                            $recipient = "";
                            }else{
                             
-                            header("Location: page.php?id=$id&message=Failed+to+send+your+mail!");
+                            header("Location: page.php?id=$id&message=ERROR: Failed+to+send+your+mail!");
 
                            }
                        }
@@ -82,12 +83,9 @@ if(!isset($_GET['id'])){
 			<?php
 			if(isset($_GET['message'])){
 				$msg = $_GET['message'];
-				echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				'.$msg.'
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				</div>';
+    			$alert = new Alert;
+    			$alert->setAlert($msg);;
+    			$alert->invoke($msg);
 			}
 			?>
 			

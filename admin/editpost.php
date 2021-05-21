@@ -1,6 +1,7 @@
 <?php
 include_once "../includes/functions.php";
 include "../includes/connection.php";
+include_once "../includes/alerts.php";
 session_start();
 if(isset($_SESSION['author_role'])){
 	if($_SESSION['author_role']=="admin"){
@@ -40,12 +41,9 @@ if(isset($_SESSION['author_role'])){
 			<?php
 			if(isset($_GET['message'])){
 				$msg = $_GET['message'];
-				echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
-				'.$msg.'
-				  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				  </button>
-				</div>';
+    			$alert = new Alert;
+    			$alert->setAlert($msg);;
+    			$alert->invoke($msg);
 			}
 			?>
 			<?php
@@ -87,7 +85,7 @@ if(isset($_SESSION['author_role'])){
 						
 						//checking if above fields are empty
 						if(empty($post_title) OR empty($post_content)){
-							echo '<script>window.location = "posts.php?message=Empty+Fields";</script>';
+							echo '<script>window.location = "posts.php?message=WARNING: Empty+Fields";</script>';
 							exit();
 						}
 						
@@ -115,28 +113,28 @@ if(isset($_SESSION['author_role'])){
 										move_uploaded_file($fileTmp, $destination);
 										$sql = "UPDATE post SET post_title='$post_title', post_keywords='$post_keywords', post_content='$post_content', post_image='$dbdestination' WHERE post_id='$post_id'";
 										if(mysqli_query($conn, $sql)){
-											echo '<script>window.location = "posts.php?message=Post+Updated";</script>';
+											echo '<script>window.location = "posts.php?message=SUCCESS: Post+Updated";</script>';
 										}else{
 											echo '<script>window.location = "posts.php?message=Error";</script>';
 											exit();
 										}
 									} else {
-										echo '<script>window.location = "newpost.php?message=YOUR FILE IS TOO BIG TO UPLOAD!";</script>';
+										echo '<script>window.location = "newpost.php?message=ERROR: YOUR FILE IS TOO BIG TO UPLOAD!";</script>';
 										exit();
 									}
 								}else{
-									echo '<script>window.location = "newpost.php?message=Oops Error Uploading your file";</script>';
+									echo '<script>window.location = "newpost.php?message=ERROR: Uploading your file";</script>';
 									exit();
 								}
 							}else{
-								echo '<script>window.location = "newpost.php?message=YOUR FILE IS TOO BIG TO UPLOAD!";</script>';
+								echo '<script>window.location = "newpost.php?message=ERROR: YOUR FILE IS TOO BIG TO UPLOAD!";</script>';
 								exit();
 							}
 						}else{
 							//user dont want to update the file
 							$sql = "UPDATE post SET post_title='$post_title', post_keywords='$post_keywords', post_content='$post_content' WHERE post_id='$post_id'";
 							if(mysqli_query($conn, $sql)){
-								echo '<script>window.location = "posts.php?message=Post+Updated";</script>';
+								echo '<script>window.location = "posts.php?message=SUCCESS: Post+Updated";</script>';
 							}else{
 								echo '<script>window.location = "posts.php?message=Error";</script>';
 							}
