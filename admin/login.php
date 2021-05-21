@@ -30,10 +30,13 @@ include_once "../includes/connection.php";
       <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
       
 	  
-      <input type="email" name="author_email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      <input type="email" name="author_email" id="inputEmail" value="<?php if(isset($_COOKIE["author_email"])) { echo $_COOKIE["author_email"]; } ?>" class="form-control" placeholder="Email address" required autofocus>
       
-      <input type="password" name="author_password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <input type="password" name="author_password" id="inputPassword" value="<?php if(isset($_COOKIE["author_password"])) { echo $_COOKIE["author_password"]; } ?>" class="form-control" placeholder="Password" required>
   
+       <p><input type="checkbox" name="remember" /> Remember me
+	</p>
+	   
       <button class="btn btn-lg btn-primary btn-block" name="signup" type="submit">Sign In</button>
      
     </form>
